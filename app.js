@@ -12,10 +12,12 @@ const app = express();
 
 // db import
 const db = require('./helper/db')();
-
+// config 
+const config = require("./config");
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.set('api_secret_key', config.api_secret_key);
 
 app.use(logger('dev'));
 app.use(express.json());

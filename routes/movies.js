@@ -1,4 +1,3 @@
-const { json } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -6,13 +5,25 @@ const Movie = require('../models/Movie');
 
 /* GET users listing. */
 router.get('/',(req,res,next)=>{
-  Movie.find({ },(err,data)=>{
-    if(err)
-      res.json(err);
-    else 
-      res.json(data);
+  const promise = Movie.aggregate([
+    {
+      $lookup : {
+        from : 'directors',
+        localField : 'director_id',
+        foreignField : '_id',
+        as : 'director'
+      }
+    },
+    {
+      $unwind : '$director'
+    }
+  ]);
+  promise.then((data)=>{
+    res.json(data);
+  }).catch((err)=>{
+    res.json(err);
   });
-})
+});
 router.post('/', (req, res, next) => {
 
   // const data = req.body;
