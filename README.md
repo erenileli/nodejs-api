@@ -1,1 +1,1 @@
-# nodejs-api
+# nodejs-movie-api
