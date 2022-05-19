@@ -1,21 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const MovieSchema = new Schema({
-    director_id : Schema.Types.ObjectId,
-    title : {
+const BookSchema = new Schema({
+    book : {
         type : String ,
         required : [true,"'{PATH} alanı gereklidir'"],
         maxlength : [20,"'{PATH}'alanı ('{VALUE}'), ({MAXLENGTH}) karakterden küçük olmalıdır"],
         minlength : [2,"'{PATH}'alanı ('{VALUE}'), ({MİNLENGTH}) karakterden büyük olmalıdır"]
     },
     category :  String,
-    country : String,
-    year : Number,
-    imdb_score :{
+    total_vote: {
         type : Number,
-        max : 10,
-        min : 0
+        default : 0
+    },
+    score : {
+        type : Number,
+        default : 0
+    },
+    status : {
+        type : Boolean,
+        default: 0,
     },
     createdAt : {
         type : Date,
@@ -23,4 +27,4 @@ const MovieSchema = new Schema({
     }
     
 })
-module.exports = mongoose.model('movie',MovieSchema);
+module.exports = mongoose.model('book',BookSchema);
